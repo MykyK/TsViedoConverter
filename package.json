@@ -1,0 +1,25 @@
+{
+  "name": "command-executer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MykyK/TsViedoConverter.git"
+  },
+  "author": "Mykyta Kaliuzhnyi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MykyK/TsViedoConverter/issues"
+  },
+  "homepage": "https://github.com/MykyK/TsViedoConverter#readme",
+  "dependencies": {
+    "inquirer": "^9.1.3"
+  },
+  "devDependencies": {
+    "@types/inquirer": "^9.0.2"
+  }
+}
