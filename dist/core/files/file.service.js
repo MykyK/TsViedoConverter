@@ -36,22 +36,51 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.App = void 0;
-var ffmpeg_exec_1 = require("./commands/ffmpeg/ffmpeg.exec");
-var logger_1 = require("./out/logger/logger");
-var App = /** @class */ (function () {
-    function App() {
+exports.FileService = void 0;
+var path_1 = require("path");
+var fs_1 = require("fs");
+var FileService = /** @class */ (function () {
+    function FileService() {
     }
-    App.prototype.run = function () {
+    FileService.prototype.isExists = function (path) {
         return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                new ffmpeg_exec_1.FfmpegExecutor(logger_1.Logger.getInstance()).execute();
-                return [2 /*return*/];
+            var _a;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        _b.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, fs_1.promises.stat(path)];
+                    case 1:
+                        _b.sent();
+                        return [2 /*return*/, true];
+                    case 2:
+                        _a = _b.sent();
+                        return [2 /*return*/, false];
+                    case 3: return [2 /*return*/];
+                }
             });
         });
     };
-    return App;
+    FileService.prototype.getFilePath = function (path, name, ext) {
+        if (!path_1.isAbsolute(path)) {
+            path = path_1.join(__dirname + '/' + path);
+        }
+        return path_1.join(path_1.dirname(path) + '/' + name + '.' + ext);
+    };
+    FileService.prototype.deleteFileIsExists = function (path) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.isExists(path)];
+                    case 1:
+                        if (_a.sent()) {
+                            fs_1.promises.unlink(path);
+                        }
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    return FileService;
 }());
-exports.App = App;
-var app = new App;
-app.run();
+exports.FileService = FileService;
