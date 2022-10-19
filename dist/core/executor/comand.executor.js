@@ -36,22 +36,34 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.App = void 0;
-var ffmpeg_exec_1 = require("./commands/ffmpeg/ffmpeg.exec");
-var logger_1 = require("./out/logger/logger");
-var App = /** @class */ (function () {
-    function App() {
+exports.CommandExecutor = void 0;
+var child_process_1 = require("child_process");
+//Template pattern
+var CommandExecutor = /** @class */ (function () {
+    function CommandExecutor(logger) {
+        this.logger = logger;
     }
-    App.prototype.run = function () {
+    CommandExecutor.prototype.execute = function () {
         return __awaiter(this, void 0, void 0, function () {
+            var input, command, stream;
             return __generator(this, function (_a) {
-                new ffmpeg_exec_1.FfmpegExecutor(logger_1.Logger.getInstance()).execute();
-                return [2 /*return*/];
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.prompt()];
+                    case 1:
+                        input = _a.sent();
+                        return [4 /*yield*/, this.build(input)];
+                    case 2:
+                        command = _a.sent();
+                        return [4 /*yield*/, this.spawn(command)];
+                    case 3:
+                        stream = _a.sent();
+                        this.processStream(stream, this.logger);
+                        return [2 /*return*/];
+                }
             });
         });
     };
-    return App;
+    return CommandExecutor;
 }());
-exports.App = App;
-var app = new App;
-app.run();
+exports.CommandExecutor = CommandExecutor;
+child_process_1.spawn('ffmpeg');
